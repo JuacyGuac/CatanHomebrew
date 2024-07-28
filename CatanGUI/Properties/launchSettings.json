@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "CatanGUI (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "CatanGUI (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
