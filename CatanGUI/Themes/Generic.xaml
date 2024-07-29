@@ -3,15 +3,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:CatanGUI">
 
-    <Style TargetType="local:BoardControl" >
+    <Style TargetType="local:HexagonControl" >
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="local:BoardControl">
-                    <Border
-                        Background="{TemplateBinding Background}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}">
-                    </Border>
+                <ControlTemplate TargetType="local:HexagonControl">
+                    <Grid>
+                        <Rectangle x:Name="PART_BoundingBox" Stroke="Red" StrokeThickness="1" />
+                        <Polygon x:Name="PART_Hexagon" Fill="Blue" />
+                    </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
