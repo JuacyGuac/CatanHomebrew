@@ -7,7 +7,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:HexagonControl">
-                    <Polygon x:Name="PART_Hexagon" Fill="Blue" />
+                    <Polygon x:Name="PART_Hexagon" Fill="{TemplateBinding Fill}"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
