@@ -1,3 +1,5 @@
+using Microsoft.UI.Xaml;
+using Microsoft.UI;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Shapes;
@@ -9,6 +11,19 @@ namespace CatanGUI
     public sealed class HexagonControl : Control
     {
         private static readonly double SQRT_3 = Math.Sqrt(3.0);
+
+        public static readonly DependencyProperty FillProperty = DependencyProperty.Register(
+            "Fill",
+            typeof(Brush),
+            typeof(HexagonControl),
+            new PropertyMetadata(new SolidColorBrush(Colors.Blue))
+        );
+
+        public Brush Fill
+        {
+            get { return (Brush)GetValue(FillProperty); }
+            set { SetValue(FillProperty, value); }
+        }
 
         public HexagonControl()
         {
