@@ -2,11 +2,14 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Shapes;
 using System;
+using Windows.Foundation;
 
 namespace CatanGUI
 {
     public sealed class HexagonControl : Control
     {
+        private static readonly double SQRT_3 = Math.Sqrt(3.0);
+
         public HexagonControl()
         {
             this.DefaultStyleKey = typeof(HexagonControl);
@@ -35,16 +38,15 @@ namespace CatanGUI
         private PointCollection CreateHexagonPoints(double width, double height)
         {
             var points = new PointCollection();
-            double size = Math.Min(width, height) / 2;
-            double halfSize = size / 2;
-            double heightOffset = Math.Sqrt(3) * size / 2;
+            
+            double size = Math.Min(width / 2.0, height / SQRT_3);
 
-            points.Add(new Windows.Foundation.Point(width / 2, (height - 2 * heightOffset) / 2));
-            points.Add(new Windows.Foundation.Point((width + size) / 2, (height - heightOffset) / 2));
-            points.Add(new Windows.Foundation.Point((width + size) / 2, (height + heightOffset) / 2));
-            points.Add(new Windows.Foundation.Point(width / 2, (height + 2 * heightOffset) / 2));
-            points.Add(new Windows.Foundation.Point((width - size) / 2, (height + heightOffset) / 2));
-            points.Add(new Windows.Foundation.Point((width - size) / 2, (height - heightOffset) / 2));
+            points.Add(new Point(0, size * SQRT_3 / 2));
+            points.Add(new Point(size / 2, 0));
+            points.Add(new Point(size * 3 / 2, 0));
+            points.Add(new Point(size * 2, size * SQRT_3 / 2));
+            points.Add(new Point(size * 3 / 2, size * SQRT_3));
+            points.Add(new Point(size / 2, size * SQRT_3));
 
             return points;
         }
