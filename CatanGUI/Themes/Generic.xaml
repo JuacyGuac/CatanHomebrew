@@ -7,10 +7,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:HexagonControl">
-                    <Grid>
-                        <Rectangle x:Name="PART_BoundingBox" Stroke="Red" StrokeThickness="1" />
-                        <Polygon x:Name="PART_Hexagon" Fill="Blue" />
-                    </Grid>
+                    <Polygon x:Name="PART_Hexagon" Fill="Blue" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

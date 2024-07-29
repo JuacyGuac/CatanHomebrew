@@ -24,13 +24,9 @@ namespace CatanGUI
         private void UpdateHexagonPoints()
         {
             var hexagon = GetTemplateChild("PART_Hexagon") as Polygon;
-            var boundingBox = GetTemplateChild("PART_BoundingBox") as Rectangle;
 
-            if (hexagon != null && boundingBox != null)
+            if (hexagon != null)
             {
-                boundingBox.Width = this.Width;
-                boundingBox.Height = this.Height;
-
                 hexagon.Points = CreateHexagonPoints(this.Width, this.Height);
             }
         }
