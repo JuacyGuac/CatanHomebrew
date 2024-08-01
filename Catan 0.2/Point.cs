@@ -1,72 +1,153 @@
 ﻿
 namespace MyApp
 {
-    internal class Point : IPoint
+    public class Point : IPoint<Point>
     {
-        int xPos { get; }
-        int yPos { get; }
+        int XPos { get; }
+        int YPos { get; }
 
         public Point(int xInit, int yInit, int zInit)
         {
-            xPos = xInit - zInit;
-            yPos = yInit - zInit;
+            XPos = xInit - zInit;
+            YPos = yInit - zInit;
         }
 
         // Returns the point one unit in the positive x direction aka east aka 0deg direction
-        public Point getEastOf()
+        public IPoint<Point> ToPointEast()
         {
-            return new Point(this.xPos + 1, this.yPos, 0);
+            return new Point(this.XPos + 1, this.YPos, 0);
         }
         // Returns the point one unit in the negative z direction aka northeast aka 60deg direction
-        public Point getNorthEastOf()
+        public IPoint<Point> ToPointNorthEast()
         {
-            return new Point(this.xPos, this.yPos, -1);
+            return new Point(this.XPos, this.YPos, -1);
         }
         // Returns the point one unit in the positive y direction aka northwest aka 120deg direction
-        public Point getNorthWestOf()
+        public IPoint<Point> ToPointNorthWest()
         {
-            return new Point(this.xPos, this.yPos + 1, 0);
+            return new Point(this.XPos, this.YPos + 1, 0);
         }
         // Returns the point one unit in the negative x direction aka west aka 180deg direction
-        public Point getWestOf()
+        public IPoint<Point> ToPointWest()
         {
-            return new Point(this.xPos - 1, this.yPos, 0);
+            return new Point(this.XPos - 1, this.YPos, 0);
         }
         // Returns the point one unit in the positive z direction aka southwest aka 240deg direction
-        public Point getSouthWestOf()
+        public IPoint<Point> ToPointSouthWest()
         {
-            return new Point(this.xPos, this.yPos, 1);
+            return new Point(this.XPos, this.YPos, 1);
         }
         // Returns the point one unit in the negative y direction aka southeast aka 300deg direction
-        public Point getSouthEastOf()
+        public IPoint<Point> ToPointSouthEast()
         {
-            return new Point(this.xPos, this.yPos - 1, 0);
+            return new Point(this.XPos, this.YPos - 1, 0);
         }
-        
-        
-        public Point getDiagonalEastNorthEast()
+
+
+
+        // Returns the point +1 x unit, -1 z unit aka 30deg direction
+        public IPoint<Point> ToHexNorthEast()
         {
-            return this.getEastOf().getNorthEastOf();
+            return this.ToPointEast().ToPointNorthEast();
         }
-        public Point getDiagonalNorth()
+        // Returns the point +1 y unit, -1 z unit aka 90deg direction
+        public IPoint<Point> ToHexNorth()
         {
-            return this.getNorthWestOf().getNorthEastOf();
+            return this.ToPointNorthWest().ToPointNorthEast();
         }
-        public Point getDiagonalWestNorthWest()
+        // Returns the point -1 x unit, +1 y unit aka 150deg direction
+        public IPoint<Point> ToHexNorthWest()
         {
-            return this.getWestOf().getNorthWestOf();
+            return this.ToPointWest().ToPointNorthWest();
         }
-        public Point getDiagonalWestSouthWest()
+        // Returns the point -1 x unit, +1 z unit aka 210deg direction
+        public IPoint<Point> ToHexSouthWest()
         {
-            return this.getWestOf().getSouthWestOf();
+            return this.ToPointWest().ToPointSouthWest();
         }
-        public Point getDiagonalSouth()
+        // Returns the point -1 y unit, +1 z unit aka 270deg direction
+        public IPoint<Point> ToHexSouth()
         {
-            return this.getSouthWestOf().getSouthEastOf();
+            return this.ToPointSouthWest().ToPointSouthEast();
         }
-        public Point getDiagonalEastSouthEast()
+        // Returns the point +1 x unit, -1 y unit aka 330deg direction
+        public IPoint<Point> ToHexSouthEast()
         {
-            return this.getEastOf().getSouthEastOf();
+            return this.ToPointEast().ToPointSouthEast();
+        }
+
+
+
+        // Returns true if Point called is strictly further to the right/east/x direction than comparison
+        public bool IsEastOf(Point comparison)
+        {
+            return ((this.XPos * 2) - this.YPos) > ((comparison.XPos * 2) - comparison.YPos);
+        }
+        // Returns true if Point called is strictly further above/to the North/perpendicular x direction than comparison
+        public bool IsNorthOf(Point comparison)
+        {
+            if (comparison is Point p)
+            {
+                // compare points
+            }
+            else
+            {
+
+            }
+            return this.YPos > comparison.YPos;
+        }
+        // Returns true if Point called is strictly further to the left/west/negative x direction than comparison
+        public bool IsWestOf(Point comparison)
+        {
+            return ((this.XPos * 2) - this.YPos) < ((comparison.XPos * 2) - comparison.YPos);
+        }
+        // Returns true if Point called is strictly further below/to the South/perpendicular x direction than comparison
+        public bool IsSouthOf(Point comparison)
+        {
+            return this.YPos < comparison.YPos;
+        }
+
+
+
+        // Returns true if Point called is strictly further to the EastNortheast/perpendicular y direction than comparison
+        public bool IsEastNorthEastOf(Point comparison)
+        {
+            return this.XPos > comparison.XPos;
+        }
+        // Returns true if Point called is strictly further to the Northeast/neg z direction than comparison
+        public bool IsNorthEastOf(Point comparison)
+        {
+            return (this.XPos + this.YPos) > (comparison.XPos + comparison.YPos);
+        }
+        // Returns true if Point called is strictly further to the Northwest/y direction than comparison
+        public bool IsNorthWestOf(Point comparison)
+        {
+            return ((this.YPos * 2) - this.XPos) > ((comparison.YPos * 2) - comparison.XPos);
+        }
+        // Returns true if Point called is strictly further to the WestNorthwest/perpendicular z direction than comparison
+        public bool IsWestNorthWestOf(Point comparison)
+        {
+            return (this.YPos - this.XPos) > (comparison.YPos - comparison.XPos);
+        }
+        // Returns true if Point called is strictly further to the WestSouthwest/perpendicular y direction than comparison
+        public bool IsWestSouthWestOf(Point comparison)
+        {
+            return this.XPos < comparison.XPos;
+        }
+        // Returns true if Point called is strictly further to the Southwest/z direction than comparison
+        public bool IsSouthWestOf(Point comparison)
+        {
+            return (this.XPos + this.YPos) < (comparison.XPos + comparison.YPos);
+        }
+        // Returns true if Point called is strictly further to the Southeast/neg y direction than comparison
+        public bool IsSouthEastOf(Point comparison)
+        {
+            return ((this.YPos * 2) - this.XPos) < ((comparison.YPos * 2) - comparison.XPos);
+        }
+        // Returns true if Point called is strictly further to the EastSoutheast/perpendicular z direction than comparison
+        public bool IsEastSouthEastOf(Point comparison)
+        {
+            return (this.YPos - this.XPos) < (comparison.YPos - comparison.XPos);
         }
     }
 }

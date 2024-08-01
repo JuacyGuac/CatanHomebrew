@@ -1,6 +1,6 @@
 ﻿namespace MyApp
 {
-    internal interface IHex
+    public interface IHex
     {
     }
 }

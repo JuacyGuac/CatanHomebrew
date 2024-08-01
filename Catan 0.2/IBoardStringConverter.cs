@@ -1,7 +1,7 @@
 ﻿namespace MyApp
 {
-    public interface IBoardStringConverter
+    public interface IBoardStringConverter<PointImpl> where PointImpl : IPoint<PointImpl>
     {
-        public string ConvertToString(IBoard b);
+        public string ConvertToString(IBoard<PointImpl> b);
     }
 }

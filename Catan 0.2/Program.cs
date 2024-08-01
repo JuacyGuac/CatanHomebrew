@@ -13,7 +13,7 @@ namespace MyApp
                 input = getHailstoneInput();
             }
 
-            Hex hex = new Hex();
+            // Hex hex = new Hex();
         }
 
 

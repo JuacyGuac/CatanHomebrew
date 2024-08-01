@@ -1,6 +1,6 @@
 ﻿namespace MyApp
 {
-    public class VertexData
+    public interface IToken
     {
     }
 }

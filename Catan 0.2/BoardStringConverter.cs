@@ -1,6 +1,6 @@
 ﻿namespace MyApp
 {
-    public class BoardStringConverter : IBoardStringConverter
+    public class BoardStringConverter<PointImpl> : IBoardStringConverter<PointImpl> where PointImpl : IPoint<PointImpl>
     {
         private int slashesPerHex;
         private int underscoresPerHex;
@@ -11,23 +11,23 @@
             underscoresPerHex = size * 2;
         }
 
-        public string ConvertToString(IBoard b)
+        public string ConvertToString(IBoard<PointImpl> b)
         {
             char[][] textBoard = GetTextBoard(b);
 
-            IPoint topLeftPoint = GetTopLeftPoint(b);
-            IPoint bottomRightPoint = GetBottomRightPoint(b);
+            PointImpl topLeftPoint = GetTopLeftPoint(b);
+            PointImpl bottomRightPoint = GetBottomRightPoint(b);
 
             int hexRow = 0;
-            IPoint currPoint = topLeftPoint;
+            PointImpl currPoint = topLeftPoint;
 
             // For each row of the board
-            while (!currPoint.IsBelow(bottomRightPoint))
+            while (!currPoint.IsSouthOf(bottomRightPoint))
             {
                 int hexCol = 0;
 
                 // For each hex in the row
-                while (!currPoint.IsRightOf(bottomRightPoint))
+                while (!currPoint.IsEastOf(bottomRightPoint))
                 {
                     if (b.HasHex(currPoint))
                     {
@@ -51,57 +51,57 @@
             return ToString(textBoard);
         }
 
-        private IPoint GetTopLeftPoint(IBoard b)
+        private PointImpl GetTopLeftPoint(IBoard<PointImpl> b)
         {
-            IPoint leftMostPoint = GetLeftMostPoint(b);
-            IPoint topMostPoint = GetTopMostPoint(b);
-            IPoint potentialTopLeftPoint = leftMostPoint;
+            PointImpl leftMostPoint = GetLeftMostPoint(b);
+            PointImpl topMostPoint = GetTopMostPoint(b);
+            PointImpl potentialTopLeftPoint = leftMostPoint;
 
-            while (potentialTopLeftPoint.IsBelow(topMostPoint))
+            while (potentialTopLeftPoint.IsSouthOf(topMostPoint))
             {
-                if (potentialTopLeftPoint.IsLeftOf(leftMostPoint))
+                if (potentialTopLeftPoint.IsWestOf(leftMostPoint))
                 {
-                    potentialTopLeftPoint = potentialTopLeftPoint.AddDeg30Root3();
+                    potentialTopLeftPoint = potentialTopLeftPoint.ToHexNorthEast();
                 }
                 else
                 {
-                    potentialTopLeftPoint = potentialTopLeftPoint.AddDeg150Root3();
+                    potentialTopLeftPoint = potentialTopLeftPoint.ToHexNorthWest();
                 }
             }
 
             return potentialTopLeftPoint;
         }
 
-        private IPoint GetBottomRightPoint(IBoard b)
+        private IPoint<PointImpl> GetBottomRightPoint<PointImpl>(IBoard<PointImpl> b) where PointImpl : IPoint<PointImpl>
         {
-            IPoint rightMostPoint = GetRightMostPoint(b);
-            IPoint bottomMostPoint = GetBottomMostPoint(b);
-            IPoint potentialBottomRightPoint = rightMostPoint;
+            IPoint<PointImpl> rightMostPoint = GetRightMostPoint(b);
+            IPoint<PointImpl> bottomMostPoint = GetBottomMostPoint(b);
+            PointImpl potentialBottomRightPoint = rightMostPoint;
 
-            while (potentialBottomRightPoint.IsAbove(bottomMostPoint))
+            while (potentialBottomRightPoint.IsNorthOf(bottomMostPoint))
             {
-                if (potentialBottomRightPoint.IsRightOf(rightMostPoint))
+                if (potentialBottomRightPoint.IsEastOf(rightMostPoint))
                 {
-                    potentialBottomRightPoint = potentialBottomRightPoint.AddDeg210Root3();
+                    potentialBottomRightPoint = potentialBottomRightPoint.ToHexSouthWest();
                 }
                 else
                 {
-                    potentialBottomRightPoint = potentialBottomRightPoint.AddDeg330Root3();
+                    potentialBottomRightPoint = potentialBottomRightPoint.ToHexSouthEast();
                 }
             }
 
             return potentialBottomRightPoint;
         }
 
-        private IPoint GetLeftMostPoint(IBoard b)
+        private PointImpl GetLeftMostPoint<PointImpl>(IBoard<PointImpl> b) where PointImpl : IPoint<PointImpl>
         {
-            IList<IHex> hexes = b.GetHexes();
-            List<IPoint> points = hexes.Select(b.GetPoint).ToList();
-            IPoint leftMostPoint = points.First();
+            IList<IHex> hexes = b.GetAllHexes();
+            List<PointImpl> points = hexes.Select(b.GetPosition).ToList();
+            PointImpl leftMostPoint = points.First();
 
-            foreach (IPoint p in points)
+            foreach (PointImpl p in points)
             {
-                if (p.IsLeftOf(leftMostPoint))
+                if (p.IsWestOf(leftMostPoint))
                 {
                     leftMostPoint = p;
                 }
@@ -110,15 +110,15 @@
             return leftMostPoint;
         }
 
-        private IPoint GetRightMostPoint(IBoard b)
+        private PointImpl GetRightMostPoint<PointImpl>(IBoard<PointImpl> b) where PointImpl : IPoint<PointImpl>
         {
-            IList<IHex> hexes = b.GetHexes();
-            List<IPoint> points = hexes.Select(b.GetPoint).ToList();
-            IPoint rightMostPoint = points.First();
+            IList<IHex> hexes = b.GetAllHexes();
+            List<PointImpl> points = hexes.Select(b.GetPosition).ToList();
+            PointImpl rightMostPoint = points.First();
 
-            foreach (IPoint p in points)
+            foreach (PointImpl p in points)
             {
-                if (p.IsRightOf(rightMostPoint))
+                if (p.IsEastOf(rightMostPoint))
                 {
                     rightMostPoint = p;
                 }
@@ -127,15 +127,15 @@
             return rightMostPoint;
         }
 
-        private IPoint GetTopMostPoint(IBoard b)
+        private PointImpl GetTopMostPoint<PointImpl>(IBoard<PointImpl> b) where PointImpl : IPoint<PointImpl>
         {
-            IList<IHex> hexes = b.GetHexes();
-            List<IPoint> points = hexes.Select(b.GetPoint).ToList();
-            IPoint topMostPoint = points.First();
+            IList<IHex> hexes = b.GetAllHexes();
+            List<PointImpl> points = hexes.Select(b.GetPosition).ToList();
+            PointImpl topMostPoint = points.First();
 
-            foreach (IPoint p in points)
+            foreach (PointImpl p in points)
             {
-                if (p.IsLeftOf(topMostPoint))
+                if (p.IsWestOf(topMostPoint))
                 {
                     topMostPoint = p;
                 }
@@ -144,13 +144,13 @@
             return topMostPoint;
         }
 
-        private IPoint GetBottomMostPoint(IBoard b)
+        private PointImpl GetBottomMostPoint<PointImpl>(IBoard<PointImpl> b) where PointImpl : IPoint<PointImpl>
         {
-            IList<IHex> hexes = b.GetHexes();
-            List<IPoint> points = hexes.Select(b.GetPoint).ToList();
-            IPoint leftMostPoint = points.First();
+            IList<IHex> hexes = b.GetAllHexes();
+            List<PointImpl> points = hexes.Select(b.GetPosition).ToList();
+            PointImpl leftMostPoint = points.First();
 
-            foreach (IPoint p in points)
+            foreach (PointImpl p in points)
             {
                 if (p.IsLeftOf(leftMostPoint))
                 {
@@ -161,19 +161,19 @@
             return leftMostPoint;
         }
 
-        private IPoint GetPoint(IPoint topLeftPoint, int hexRow, int hexCol)
+        private PointImpl GetPoint<PointImpl>(PointImpl topLeftPoint, int hexRow, int hexCol) where PointImpl : IPoint<PointImpl>
         {
-            IPoint currPoint = topLeftPoint;
+            PointImpl currPoint = topLeftPoint;
 
             while (hexRow != 0)
             {
-                if (currPoint.IsRightOf(topLeftPoint))
+                if (currPoint.IsEastOf(topLeftPoint))
                 {
-                    currPoint = currPoint.AddDeg210Root3();
+                    currPoint = currPoint.ToHexSouthWest();
                 }
                 else
                 {
-                    currPoint = currPoint.AddDeg330Root3();
+                    currPoint = currPoint.ToHexSouthEast();
                 }
 
                 hexRow--;
@@ -189,7 +189,7 @@
             return currPoint;
         }
 
-        private char[][] GetTextBoard(IBoard b)
+        private char[][] GetTextBoard<PointImpl>(IBoard<PointImpl> b) where PointImpl : IPoint<PointImpl>
         {
             int numTextRows = GetNumTextRows(b);
             int numTextCols = GetNumTextCols(b);

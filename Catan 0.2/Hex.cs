@@ -2,8 +2,9 @@
 {
     public class Hex
     {
-        public HexType type { get; set; }  // What type of hex is it?
-        public HashSet<int> numberToken { get; set; }  // What number token(s) are on it?
+        public HexType type { get; set; }  // What type of hex is it?  This should be all we need
+
+        /*public HashSet<int> numberToken { get; set; }  // What number token(s) are on it?
         // private Point position;  // wait how do we assign this
         public bool hasRobber { get; set; }
         public bool hasPirate { get; set; }
@@ -19,5 +20,6 @@
             hasMerchant = false;
             hasPiece = false;
         }
+        */
     }
 }
