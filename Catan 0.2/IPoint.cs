@@ -18,19 +18,19 @@
         
         /* for the following methods, comparison must be the same IPoint implementation as called with
          */
-        public bool IsEastOf(PointImpl comparison);
-        public bool IsWestOf(PointImpl comparison);
-        public bool IsNorthOf(PointImpl comparison);
-        public bool IsSouthOf(PointImpl comparison);
+        public bool IsEastOf(IPoint<PointImpl> comparison);
+        public bool IsWestOf(IPoint<PointImpl> comparison);
+        public bool IsNorthOf(IPoint<PointImpl> comparison);
+        public bool IsSouthOf(IPoint<PointImpl> comparison);
 
-        public bool IsEastNorthEastOf(PointImpl comparison);
-        public bool IsNorthEastOf(PointImpl comparison);
-        public bool IsNorthWestOf(PointImpl comparison);
-        public bool IsWestNorthWestOf(PointImpl comparison);
-        public bool IsWestSouthWestOf(PointImpl comparison);
-        public bool IsSouthWestOf(PointImpl comparison);
-        public bool IsSouthEastOf(PointImpl comparison);
-        public bool IsEastSouthEastOf(PointImpl comparison);
+        public bool IsEastNorthEastOf(IPoint<PointImpl> comparison);
+        public bool IsNorthEastOf(IPoint<PointImpl> comparison);
+        public bool IsNorthWestOf(IPoint<PointImpl> comparison);
+        public bool IsWestNorthWestOf(IPoint<PointImpl> comparison);
+        public bool IsWestSouthWestOf(IPoint<PointImpl> comparison);
+        public bool IsSouthWestOf(IPoint<PointImpl> comparison);
+        public bool IsSouthEastOf(IPoint<PointImpl> comparison);
+        public bool IsEastSouthEastOf(IPoint<PointImpl> comparison);
 
     }
 }
