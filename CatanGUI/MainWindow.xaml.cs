@@ -5,7 +5,8 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
-using System;
+using System.Windows;
+using System.ComponentModel;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -26,6 +27,7 @@ namespace CatanGUI
         public MainWindow()
         {
             this.InitializeComponent();
+            DataContext = new MainWindowViewModel();
         }
 
         private void myButton_Click(object sender, RoutedEventArgs e)

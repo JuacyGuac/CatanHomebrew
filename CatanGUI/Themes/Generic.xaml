@@ -12,4 +12,15 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style TargetType="local:BoardControlBase" >
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:BoardControlBase">
+                    <Canvas x:Name="PART_Canvas"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
 </ResourceDictionary>

@@ -1,4 +1,6 @@
-﻿namespace CatanLibrary
+﻿using Windows.Graphics.Display;
+
+namespace CatanLibrary
 {
     public interface IPoint<PointImpl>
     {
@@ -31,6 +33,5 @@
         public bool IsSouthWestOf(PointImpl comparison);
         public bool IsSouthEastOf(PointImpl comparison);
         public bool IsEastSouthEastOf(PointImpl comparison);
-
     }
 }

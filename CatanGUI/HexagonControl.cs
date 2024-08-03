@@ -25,6 +25,25 @@ namespace CatanGUI
             set { SetValue(FillProperty, value); }
         }
 
+        public static readonly DependencyProperty SizeProperty = DependencyProperty.Register(
+            "Size",
+            typeof(double),
+            typeof(HexagonControl),
+            new PropertyMetadata(0.0, OnSizeChanged)
+        );
+
+        public double Size
+        {
+            get { return (double)GetValue(SizeProperty); }
+            set { SetValue(SizeProperty, value); }
+        }
+
+        private static void OnSizeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = (HexagonControl)d;
+            control.InvalidateArrange();
+        }
+
         public HexagonControl()
         {
             this.DefaultStyleKey = typeof(HexagonControl);
@@ -42,22 +61,21 @@ namespace CatanGUI
 
             if (hexagon != null)
             {
-                hexagon.Points = CreateHexagonPoints(this.Width, this.Height);
+                hexagon.Points = CreateHexagonPoints(this.Size);
             }
         }
 
-        private PointCollection CreateHexagonPoints(double width, double height)
+        private static PointCollection CreateHexagonPoints(double size)
         {
-            var points = new PointCollection();
-            
-            double size = Math.Min(width / 2.0, height / SQRT_3);
-
-            points.Add(new Point(0, size * SQRT_3 / 2));
-            points.Add(new Point(size / 2, 0));
-            points.Add(new Point(size * 3 / 2, 0));
-            points.Add(new Point(size * 2, size * SQRT_3 / 2));
-            points.Add(new Point(size * 3 / 2, size * SQRT_3));
-            points.Add(new Point(size / 2, size * SQRT_3));
+            var points = new PointCollection
+            {
+                new Point(0, size * SQRT_3 / 2),
+                new Point(size / 2, 0),
+                new Point(size * 3 / 2, 0),
+                new Point(size * 2, size * SQRT_3 / 2),
+                new Point(size * 3 / 2, size * SQRT_3),
+                new Point(size / 2, size * SQRT_3)
+            };
 
             return points;
         }

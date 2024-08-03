@@ -10,6 +10,7 @@
 
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
         <Button x:Name="myButton" Click="myButton_Click">Click Me</Button>
-        <local:HexagonControl Width="200" Height="200" Fill="Red"></local:HexagonControl>
+        <local:HexagonControl Size="50" Fill="Red"></local:HexagonControl>
+        <local:BoardControl Size="50"></local:BoardControl>
     </StackPanel>
 </Window>
